@@ -1,14 +1,13 @@
 import re
-from collections import Counter
 
-
-def load_article(filepath):
-    with open(filepath, "r", encoding="utf-8") as file:
-        return file.read()
-
+def load_article(filename):
+    file = open(filename, "r", encoding="utf-8")
+    text = file.read()
+    file.close()
+    return text
 
 def count_specific_word(text, word):
-    words = re.findall(r'\b\w+\b', text.lower())
+    words = re.findall(r"\w+", text.lower())
 
     count = 0
 
@@ -20,58 +19,51 @@ def count_specific_word(text, word):
 
     return count
 
-
 def identify_most_common_word(text):
-    if not text.strip():
+    if text.strip() == "":
         return None
 
-    words = re.findall(r'\b[a-zA-Z]+\b', text.lower())
-
-    if not words:
-        return None
-
-    counts = Counter(words)
+    words = re.findall(r"[a-zA-Z]+", text.lower())
 
     most_common = None
     highest_count = 0
 
-    for word, frequency in counts.items():
-        if frequency > highest_count:
-            highest_count = frequency
+    for word in words:
+        current_count = words.count(word)
+
+        if current_count > highest_count:
+            highest_count = current_count
             most_common = word
         else:
             pass
 
     return most_common
 
-
 def calculate_average_word_length(text):
-    if not text.strip():
+    if text.strip() == "":
         return 0
 
-    words = re.findall(r'\b[a-zA-Z]+\b', text)
+    words = re.findall(r"[a-zA-Z]+", text)
 
-    if not words:
-        return 0
-
-    total_length = 0
+    total = 0
 
     for word in words:
-        total_length += len(word)
+        total = total + len(word)
 
-    return round(total_length / len(words), 2)
+    average = total / len(words)
 
+    return round(average, 2)
 
 def count_paragraphs(text):
-    if not text.strip():
+    if text.strip() == "":
         return 1
 
-    paragraphs = re.split(r'\n\s*\n', text.strip())
+    paragraphs = text.strip().split("\n\n")
 
     count = 0
 
     for paragraph in paragraphs:
-        if paragraph.strip():
+        if paragraph.strip() != "":
             count += 1
         else:
             pass
@@ -80,20 +72,17 @@ def count_paragraphs(text):
 
 
 def count_sentences(text):
-    if not text.strip():
+    if text.strip() == "":
         return 1
 
-    sentences = re.findall(r'[.!?]+', text)
-
-    if not sentences:
-        return 1
+    endings = re.findall(r"[.!?]", text)
 
     count = 0
-    index = 0
+    i = 0
 
-    while index < len(sentences):
+    while i < len(endings):
         count += 1
-        index += 1
+        i += 1
 
     return count
 
