@@ -97,15 +97,15 @@ def count_sentences(text):
 
     return count
 
-
 if __name__ == "__main__":
+
     article = load_article("news_article.txt")
 
-    print(f"Article loaded ({len(article)} characters)")
+    print("Article loaded (" + str(len(article)) + " characters)")
 
     search_word = "apple"
 
-    print(f"Occurrences of '{search_word}':",
+    print("Occurrences of '" + search_word + "':",
           count_specific_word(article, search_word))
 
     print("Most common word:",
